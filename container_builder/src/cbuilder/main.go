@@ -44,6 +44,7 @@ func headSha() (string, error) {
         return "", fmt.Errorf("failed to get HEAD SHA, %+v", err)
     }
     s := out.String()
+    s = strings.TrimSpace(s)
     fmt.Printf("HEAD SHA: %s\n", s)
     return s, nil
 }
@@ -65,6 +66,7 @@ func upstreamSha() (string, error) {
         return "", fmt.Errorf("failed to get upstream SHA, %+v", err)
     }
     s := out.String()
+    s = strings.TrimSpace(s)
     fmt.Printf("upstream SHA: %s\n", s)
     return s, nil
 }
@@ -79,12 +81,15 @@ func gitDiff(upstream, head string) (string, error) {
     }
     fmt.Printf("will git diff %s\n", diffRange)
 
-    cmd := exec.Command("git", "diff", diffRange, "--name-only")
-    var out bytes.Buffer
+    cmd := exec.Command("git", "diff", diffRange, "--name-only", "--", ".")
+    var out, errbuf bytes.Buffer
     defer out.Reset()
+    defer errbuf.Reset()
     cmd.Stdout = &out
+    cmd.Stderr = &errbuf
     err := cmd.Run()
     if err != nil {
+        fmt.Printf("failed to git diff: %s", errbuf.String())
         return "", fmt.Errorf("failed to get diff, %+v", err)
     }
     return out.String(), nil
