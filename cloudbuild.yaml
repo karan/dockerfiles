@@ -1,20 +1,26 @@
 steps:
 
-# Report the diff in this change
+# Build the binary.
+- name: 'gcr.io/cloud-builders/go'
+  dir: container_builder
+  args: ['install', 'cbuilder']
+  env: ['GOPATH=.']
+# Execute the binary
 - name: 'gcr.io/cloud-builders/git'
-  args: ['diff', '--stat', 'HEAD~1', '--', '.']
+  entrypoint: 'bash'
+  args: ['-c', './container_builder/bin/cbuilder']
 
 # Images
-- name: 'gcr.io/cloud-builders/docker'
-  dir: hello-world
-  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/hello-world', '.' ]
+# - name: 'gcr.io/cloud-builders/docker'
+#   dir: hello-world
+#   args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/hello-world', '.' ]
 
-- name: 'gcr.io/cloud-builders/docker'
-  dir: tor-relay
-  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/tor-relay', '.' ]
+# - name: 'gcr.io/cloud-builders/docker'
+#   dir: tor-relay
+#   args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/tor-relay', '.' ]
 
 timeout: 600s
 
-images:
-- 'gcr.io/$PROJECT_ID/hello-world'
-- 'gcr.io/$PROJECT_ID/tor-relay'
+# images:
+# - 'gcr.io/$PROJECT_ID/hello-world'
+# - 'gcr.io/$PROJECT_ID/tor-relay'
