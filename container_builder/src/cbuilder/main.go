@@ -74,7 +74,7 @@ func upstreamSha() (string, error) {
 // Returns `git diff --name-only` output based on passed SHAs.
 func gitDiff(upstream, head string) (string, error) {
     // If HEAD and upstream are the same, get uncommitted changes.
-    diffRange := "HEAD~"
+    diffRange := "FETCH_HEAD~"
     // If head and upstream are different, we want the commit diff.
     if upstream != head {
         diffRange = fmt.Sprintf("%s...$s", upstream, head)
