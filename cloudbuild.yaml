@@ -1,26 +1,29 @@
 steps:
 
 # Build the binary.
-# - name: 'gcr.io/cloud-builders/go'
-#   dir: container_builder
-#   args: ['install', 'cbuilder']
-#   env: ['GOPATH=.']
-# # Execute the binary
-# - name: 'gcr.io/cloud-builders/git'
-#   entrypoint: 'bash'
-#   args: ['-c', './container_builder/bin/cbuilder']
+- name: 'gcr.io/cloud-builders/go'
+  dir: container_builder
+  args: ['install', 'cbuilder']
+  env: ['GOPATH=.']
+# Deepen the clone since GCB only gets --depth=1
+- name: gcr.io/cloud-builders/git
+  args: ['fetch', '--unshallow']
+# Execute the binary
+- name: 'gcr.io/cloud-builders/git'
+  entrypoint: 'bash'
+  args: ['-c', './container_builder/bin/cbuilder']
 
 # Images
-- name: 'gcr.io/cloud-builders/docker'
-  dir: hello-world
-  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/hello-world', '.' ]
+# - name: 'gcr.io/cloud-builders/docker'
+#   dir: hello-world
+#   args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/hello-world', '.' ]
 
-- name: 'gcr.io/cloud-builders/docker'
-  dir: tor-relay
-  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/tor-relay', '.' ]
+# - name: 'gcr.io/cloud-builders/docker'
+#   dir: tor-relay
+#   args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/tor-relay', '.' ]
 
 timeout: 600s
 
-images:
-- 'gcr.io/$PROJECT_ID/hello-world'
-- 'gcr.io/$PROJECT_ID/tor-relay'
+# images:
+# - 'gcr.io/$PROJECT_ID/hello-world'
+# - 'gcr.io/$PROJECT_ID/tor-relay'

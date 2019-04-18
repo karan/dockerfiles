@@ -156,6 +156,19 @@ func main() {
 
     // For each dir in changed set, if it's in all dockerfiles set, build and
     // push it.
+    for _, changedDir := range changedDirs {
+        if stringInSlice(changedDir, allDirs) {
+            fmt.Printf("%s dir changed with Dockerfile, will docker build this\n", changedDir)
+        }
+    }
 
+}
 
+func stringInSlice(a string, list []string) bool {
+    for _, b := range list {
+        if b == a {
+            return true
+        }
+    }
+    return false
 }
