@@ -3,6 +3,7 @@ package main
 import (
     "bytes"
     "fmt"
+    "io/ioutil"
     "os"
     "os/exec"
     "path/filepath"
@@ -156,12 +157,20 @@ func main() {
 
     // For each dir in changed set, if it's in all dockerfiles set, build and
     // push it.
+    containersToBuild := ""
     for _, changedDir := range changedDirs {
         if stringInSlice(changedDir, allDirs) {
-            fmt.Printf("%s dir changed with Dockerfile, will docker build this\n", changedDir)
+            fmt.Printf("%s dir changed with Dockerfile\n", changedDir)
+            containersToBuild = fmt.Sprintf("%s\n%s", changedDir, containersToBuild)
         }
     }
 
+    d1 := []byte(containersToBuild)
+    err = ioutil.WriteFile("tobuild", d1, 0644)
+    if err != nil {
+        fmt.Println(err)
+        os.Exit(1)
+    }
 }
 
 func stringInSlice(a string, list []string) bool {

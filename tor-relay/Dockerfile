@@ -16,12 +16,14 @@
 #       --name tor-relay \
 #       jess/tor-relay -f /etc/tor/torrc.exit
 #
-FROM alpine:latest
+FROM alpine:3.9
 LABEL maintainer "Karan Goel <_@goel.io>"
+
+ARG TOR_VERSION=0.3.4.11-r0
 
 RUN apk --no-cache add \
     bash \
-    tor
+    tor=${TOR_VERSION}
 
 # default port to used for incoming Tor connections
 # can be changed by changing 'ORPort' in torrc

@@ -1,3 +1,4 @@
 *~
 .DS_Store
-container_builder/src/cbuilder/cbuilder
+changed_images/src/cbuilder/cbuilder
+tobuild

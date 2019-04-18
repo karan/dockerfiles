@@ -2,16 +2,23 @@ steps:
 
 # Build the binary.
 - name: 'gcr.io/cloud-builders/go'
-  dir: container_builder
+  dir: changed_images
   args: ['install', 'cbuilder']
   env: ['GOPATH=.']
 # Deepen the clone since GCB only gets --depth=1
 - name: gcr.io/cloud-builders/git
   args: ['fetch', '--unshallow']
-# Execute the binary
+# Execute the binary to finding changed images
 - name: 'gcr.io/cloud-builders/git'
   entrypoint: 'bash'
-  args: ['-c', './container_builder/bin/cbuilder']
+  args: ['-c', './changed_images/bin/cbuilder']
+# Build changed images
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: 'bash'
+  args: ['./build-containers.sh', 'tobuild']
+  env:
+  - 'PROJECT_ID=$PROJECT_ID'
+  - 'SHORT_SHA=$SHORT_SHA'
 
 # Images
 # - name: 'gcr.io/cloud-builders/docker'
