@@ -24,13 +24,12 @@ steps:
 # - name: 'gcr.io/cloud-builders/docker'
 #   dir: hello-world
 #   args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/hello-world', '.' ]
-
 # - name: 'gcr.io/cloud-builders/docker'
 #   dir: tor-relay
 #   args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/tor-relay', '.' ]
-
-timeout: 600s
-
 # images:
 # - 'gcr.io/$PROJECT_ID/hello-world'
 # - 'gcr.io/$PROJECT_ID/tor-relay'
+
+timeout: 600s
+
