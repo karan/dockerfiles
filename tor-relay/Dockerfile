@@ -20,7 +20,7 @@ FROM alpine:latest
 LABEL maintainer "Karan Goel <_@goel.io>"
 
 # From https://pkgs.alpinelinux.org/packages?name=tor
-ARG TOR_VERSION=0.4.2.7-r1
+ARG TOR_VERSION=0.4.1.9
 
 RUN apk --no-cache add \
     bash \
