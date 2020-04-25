@@ -16,7 +16,7 @@
 #       --name tor-relay \
 #       jess/tor-relay -f /etc/tor/torrc.exit
 #
-FROM alpine:3.11
+FROM alpine:latest
 LABEL maintainer "Karan Goel <_@goel.io>"
 
 # From https://pkgs.alpinelinux.org/packages?name=tor
