@@ -16,11 +16,11 @@
 #       --name tor-relay \
 #       jess/tor-relay -f /etc/tor/torrc.exit
 #
-FROM alpine:latest
+FROM alpine:3.11
 LABEL maintainer "Karan Goel <_@goel.io>"
 
-# From https://pkgs.alpinelinux.org/packages?name=tor
-ARG TOR_VERSION=0.4.1.9
+# From https://pkgs.alpinelinux.org/packages?name=tor&branch=v3.11
+ARG TOR_VERSION=0.4.1.9-r1
 
 RUN apk --no-cache add \
     bash \
