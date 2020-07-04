@@ -16,6 +16,6 @@ jobs:
           username: _json_key
           password: ${{ secrets.DOCKER_PASSWORD }}
           registry: gcr.io
-          repository: krn-dev
+          repository: krn-dev/tor-relay
           tag_with_sha: true
           path: tor-relay
