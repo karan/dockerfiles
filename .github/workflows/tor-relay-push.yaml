@@ -1,0 +1,21 @@
+name: tor-relay-push-image
+on:
+  push:
+    branches: [master]
+    paths:
+    - 'tor-relay/**'
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build and push docker image
+        uses: docker/build-push-action@v1
+        with:
+          username: _json_key
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          registry: gcr.io
+          repository: krn-dev/tor-relay
+          tag_with_sha: true
+          path: tor-relay
